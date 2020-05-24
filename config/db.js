@@ -24,8 +24,8 @@ if (env === 'production') {
   // mysql配置
   MYSQL_CONF = {
     host: 'localhost',
-    user: 'root',
-    password: '950823yy',
+    user: 'yueyan',
+    password: '123456',
     port: '3306',
     database: 'yueyan_blog'
   }

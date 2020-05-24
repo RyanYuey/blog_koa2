@@ -28,7 +28,7 @@ const schemaObj = {
   }),
   _api_article_del_comment: Joi.object().keys({
     id: Joi.required(),
-    article_id: Joi.required(),
+    article_id: Joi.optional(),
   }),
   _api_admin_new_article: Joi.object().keys({
     article_title: Joi.string().required(),
