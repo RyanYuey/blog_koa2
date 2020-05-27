@@ -1,7 +1,7 @@
 const loginCheck = require('./../middleware/loginCheck')
 const { SuccessModel } = require('../model/resModel')
 const router = require('koa-router')()
-const { getDiaryList, getLabelList, getSortList, getMessage, newMessage, deleteMessage } = require('../controller/common')
+const { getDiaryList, getLabelList, getSortList, getMessage, newMessage, deleteMessage, getImages } = require('../controller/common')
 
 // 文件上传
 router.post('/api/upload', async (ctx, next) => {
@@ -45,4 +45,8 @@ router.post('/api/del_message', loginCheck, async (ctx) => {
   ctx.body = await deleteMessage(user_id, ctx.request.body.id)
 })
 
+// 获取默认图片列表
+router.get('/api/img_list', async (ctx) => {
+  ctx.body = await getImages(ctx.query.type)
+})
 module.exports = router

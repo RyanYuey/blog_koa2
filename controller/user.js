@@ -34,9 +34,12 @@ const login = async (username, password) => {
  * @param {Object} options ctx.request.body
  * @return {Promise}
  */
-const register = async ({ user_name, user_password, user_email, user_avatar, user_nickname, user_ip }) => {
+const register = async ({ user_name, user_password, user_avatar, user_nickname, user_ip }) => {
   // 密码加密
   user_password = genPassword(user_password)
+
+  // 暂时邮箱和用户名一样
+  let user_email = user_name;
 
   // 防止sql注入
   user_name = escape(user_name)
@@ -71,7 +74,19 @@ const register = async ({ user_name, user_password, user_email, user_avatar, use
   return new SuccessModel('注册成功')
 }
 
+/**
+ * 获取用户列表
+ * @method getUserList
+ * @return {Promise}
+ */
+const getUserList = async () => {
+  let sql = `select user_nickname,user_email,user_type,user_id from users where 1=1`
+  const rows = await exec(sql)
+  return new SuccessModel(rows)
+}
+
 module.exports = {
   login,
-  register
+  register,
+  getUserList
 }

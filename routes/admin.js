@@ -3,7 +3,9 @@ const { SuccessModel, ErrorModel } = require('../model/resModel')
 const adminCheck = require('../middleware/adminCheck')              //管理员验证中间件
 const paramVolidation = require('../middleware/paramsVolidate')
 const {
-  newArticle, updateArticle, deleteArticle, newDiary, deleteDiary, newLabel, deleteLabel, newSort, updateSort, updateLabel, deleteSort, updateUser
+  newArticle, updateArticle, deleteArticle, newDiary, deleteDiary,
+  newLabel, deleteLabel, newSort, updateSort, updateLabel, deleteSort,
+  updateUser, addDefaultAvatar, deleteDefaultAvatar, deleteUser
 } = require('../controller/admin')
 
 router.prefix('/api/admin')
@@ -80,6 +82,22 @@ router.post('/del_sort', paramVolidation, async (ctx) => {
 router.post('/update_user', paramVolidation, async (ctx) => {
   const user_id = ctx.session.user_id
   ctx.body = await updateUser(user_id, ctx.request.body)
+})
+
+/* 设置 */
+// 设置默认用户头像
+router.post('/set_avatar', paramVolidation, async (ctx) => {
+  ctx.body = await addDefaultAvatar(ctx.request.body.images)
+})
+
+// 删除默认用户头像
+router.post('/del_avatar', async (ctx) => {
+  ctx.body = await deleteDefaultAvatar(ctx.request.body.id)
+})
+
+// 删除用户
+router.post('/del_user', paramVolidation, async (ctx) => {
+  ctx.body = await deleteUser(ctx.request.body.user_id)
 })
 
 module.exports = router

@@ -9,7 +9,6 @@ router.prefix('/api/article')
 
 // 获取博文列表
 router.get('/list', async (ctx, next) => {
-  console.log(ctx.query)
   const keyword = ctx.query.keyword || ''
   const sort_id = ctx.query.sort_id || ''
   const page = ctx.query.page || 1

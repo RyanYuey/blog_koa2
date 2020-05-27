@@ -7,7 +7,7 @@ const schemaObj = {
   _api_user_register: Joi.object().keys({
     user_name: Joi.string().min(3).max(20).required(),
     user_password: Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/),
-    user_email: Joi.string().email(),
+    user_email: Joi.string().email().optional(),
     user_nickname: Joi.string().min(3).max(20).required(),
     user_avatar: Joi.optional()
   }),
@@ -84,6 +84,12 @@ const schemaObj = {
     user_email: Joi.string().email(),
     user_nickname: Joi.string().min(3).max(20),
     user_avatar: Joi.optional()
-  }).or('user_name', 'user_email', 'user_nickname', 'user_avatar')
+  }).or('user_name', 'user_email', 'user_nickname', 'user_avatar'),
+  _api_admin_set_avatar: Joi.object().keys({
+    images: Joi.string().required()
+  }),
+  _api_admin_del_user: Joi.object().keys({
+    user_id: Joi.required()
+  })
 }
 module.exports = schemaObj

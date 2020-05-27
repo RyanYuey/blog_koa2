@@ -296,6 +296,70 @@ const updateUser = async (user_id, options) => {
   }
 }
 
+/**
+ * 添加默认头像
+ * @method addDefaultAvatar
+ * @param {String} images
+ * @return {Promise}
+ */
+const addDefaultAvatar = async (images) => {
+  const imgArr = images.split(',')
+  let values = []
+  imgArr.forEach(img => {
+    values.push(`('${img}',1)`)
+  })
+
+  let sql = `insert into images(href,type) values ${values.join(',')}`
+  try {
+    const result = await exec(sql)
+    if (result.affectedRows > 0) {
+      return new SuccessModel('修改成功')
+    }
+    return new ErrorModel('修改失败')
+  } catch (error) {
+    return new ErrorModel('添加失败')
+  }
+}
+
+/**
+ * 删除默认头像
+ * @method deleteDefaultAvatar
+ * @param {Number} id
+ * @return {Promise}
+ */
+const deleteDefaultAvatar = async (id) => {
+  let sql = `delete from images where id=${id}`
+  try {
+    const result = await exec(sql)
+    if (result.affectedRows > 0) {
+      return new SuccessModel('删除成功')
+    }
+    return new ErrorModel('删除失败')
+  } catch (error) {
+    return new ErrorModel(error)
+  }
+}
+
+/**
+ * 删除用户
+ * @method deleteUser
+ * @param {Number} user_id
+ * @return {Promise}
+ */
+const deleteUser = async (user_id) => {
+  let sql = `delete from users where user_id=${user_id} and user_type=1`
+  try {
+    const result = await exec(sql)
+    if (result.affectedRows > 0) {
+      return new SuccessModel('删除成功')
+    }
+    return new ErrorModel('删除失败')
+  } catch (error) {
+    return new ErrorModel(error)
+  }
+}
+
+
 module.exports = {
   newArticle,
   updateArticle,
@@ -308,5 +372,8 @@ module.exports = {
   deleteSort,
   updateUser,
   updateSort,
-  updateLabel
+  updateLabel,
+  addDefaultAvatar,
+  deleteDefaultAvatar,
+  deleteUser
 }

@@ -119,11 +119,28 @@ const deleteMessage = async (user_id, id) => {
   }
 }
 
+/**
+ * 获取图片列表
+ * @method getImages
+ * @param {Number} type
+ * @return {Promise}
+ */
+const getImages = async (type = 1) => {
+  let sql = `select * from images where type=${type}`
+  try {
+    const rows = await exec(sql)
+    return new SuccessModel(rows)
+  } catch (error) {
+    return new ErrorModel(error)
+  }
+}
+
 module.exports = {
   getDiaryList,
   getLabelList,
   getSortList,
   getMessage,
   newMessage,
-  deleteMessage
+  deleteMessage,
+  getImages
 }
