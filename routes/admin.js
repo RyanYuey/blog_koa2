@@ -87,7 +87,7 @@ router.post('/update_user', paramVolidation, async (ctx) => {
 /* 设置 */
 // 设置默认用户头像
 router.post('/set_avatar', paramVolidation, async (ctx) => {
-  ctx.body = await addDefaultAvatar(ctx.request.body.images)
+  ctx.body = await addDefaultAvatar(ctx.request.body)
 })
 
 // 删除默认用户头像

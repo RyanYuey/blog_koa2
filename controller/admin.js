@@ -17,8 +17,8 @@ const newArticle = async (user_id, { article_title, article_content, article_abs
   // 如果没有上传文章缩略图，设置默认的
   if (!thumbnail) {
     // 从数据库拿到默认图
-    const rows = await exec('select * from default_img where d_type=1')
-    thumbnail = rows[0].d_img
+    const rows = await exec('select * from images where type=2')
+    thumbnail = rows[0].href
   }
 
   let sql = `insert into articles (article_title,article_content,article_abstract,thumbnail,user_id,create_time,update_time,label_id,sort_id) 
@@ -299,14 +299,14 @@ const updateUser = async (user_id, options) => {
 /**
  * 添加默认头像
  * @method addDefaultAvatar
- * @param {String} images
+ * @param {Object} 
  * @return {Promise}
  */
-const addDefaultAvatar = async (images) => {
+const addDefaultAvatar = async ({ images, type = 1 }) => {
   const imgArr = images.split(',')
   let values = []
   imgArr.forEach(img => {
-    values.push(`('${img}',1)`)
+    values.push(`('${img}',${type})`)
   })
 
   let sql = `insert into images(href,type) values ${values.join(',')}`

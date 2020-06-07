@@ -86,7 +86,8 @@ const schemaObj = {
     user_avatar: Joi.optional()
   }).or('user_name', 'user_email', 'user_nickname', 'user_avatar'),
   _api_admin_set_avatar: Joi.object().keys({
-    images: Joi.string().required()
+    images: Joi.string().required(),
+    type: Joi.optional()
   }),
   _api_admin_del_user: Joi.object().keys({
     user_id: Joi.required()
