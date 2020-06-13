@@ -11,7 +11,9 @@ const path = require('path')
 const fs = require('fs')
 const morgan = require('koa-morgan')                //日志插件
 const koaBody = require('koa-body')                 //文件上传插件
-
+const history = require('koa-connect-history-api-fallback');    //解决vue项目刷新404
+const compress = require('koa-compress');           //实现gzip压缩
+app.use(history());
 // 引入公用方法
 const { getUploadDirName, getUploadFileName, getUploadFileExt, checkDirExist } = require('./utils/util')
 
@@ -25,10 +27,11 @@ const admin = require('./routes/admin')                       //管理员接口
 // error handler
 onerror(app)
 
-// middlewares
-// app.use(bodyparser({
-//   enableTypes: ['json', 'form', 'text']
-// }))
+// 使用gzip压缩
+app.use(compress({
+  threshold: 1024
+}))
+
 app.use(koaBody({
   multipart: true, // 支持文件上传
   // encoding: 'gzip',

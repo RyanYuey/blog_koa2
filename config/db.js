@@ -7,7 +7,7 @@ if (env === 'dev') {
   MYSQL_CONF = {
     host: 'localhost',
     user: 'root',
-    password: '950823yy',
+    password: '',
     port: '3306',
     database: 'yueyan_blog'
   }
@@ -23,11 +23,11 @@ if (env === 'dev') {
 if (env === 'production') {
   // mysql配置
   MYSQL_CONF = {
-    host: '47.114.145.6',
+    host: 'localhost',
     user: 'root',
-    password: 'Yy137818..//##',
+    password: '',
     port: '3306',
-    database: 'blog'
+    database: 'yueyan_blog'
   }
 
   // redis配置
